@@ -1,0 +1,42 @@
+.bc1{
+    position: fixed;
+    width: 100vw;
+    height: 98vh;
+    top: 0;
+    left: 0;
+    background-color:transparent;
+    /* background: #000; */
+    cursor:initial;
+    z-index: 0;
+}
+.bc2{
+    position: fixed;
+    width: 100vw;
+    height: 98vh;
+    top: 0;
+    left: 0;
+    background-color:transparent;
+    background: #000;
+    cursor:initial;
+    z-index: 100;
+    
+}
+
+.btnClose {
+    position: absolute;
+    right: 10px;
+    top: 10px;
+    transition: all 100ms;
+    width: 50px;
+    height: 50px;
+    border: 1px solid #161711;
+    border-radius: 5px;
+
+}
+.btnClose:hover{
+    background: rgba(232, 34, 34, 0.977);
+    color: #fff;
+}
+.btnClose span {
+    font-size: 2rem;
+}

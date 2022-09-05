@@ -1,0 +1,8 @@
+.item{
+    width: calc(var(--videoCardWidth)/2);
+    height: calc(var(--videoCardHeight)/2);
+    margin: 15px;
+    box-shadow: 0 0 20px 5px #0005;
+    background: #000;
+}
+

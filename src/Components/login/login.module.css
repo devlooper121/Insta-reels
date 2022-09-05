@@ -1,0 +1,42 @@
+.loginCont{
+    margin-top: 5rem;
+    width: 100vw;
+    height: 100vh;
+}
+
+
+.link {
+    text-decoration: none;
+    font-weight: 500;
+    color: blue;
+}
+
+.btnIN{
+    margin: 1.5rem 0;
+}
+
+.separatoer{
+    display: flex;
+    align-items: center;
+    width: 100%;
+    height: 30px;
+}
+.separatoer p {
+    display: flex;
+    width: 20%;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+}
+.left {
+    width: 40%;
+    border: 1px solid #ccc;
+    border-width: 2px 0 0 0 ;
+}
+form {
+    width: 100%;
+    margin: none;
+    padding: none;
+    /* background: #000; */
+}
+

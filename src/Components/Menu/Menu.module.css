@@ -1,0 +1,52 @@
+.square{
+    width: 20px;
+    height: 20px;
+    transform: rotate(45deg);
+    background-color: #fafafa;
+    position:absolute;
+    right: 35px;
+    top: -10px;
+    box-shadow: 0 0 4px 1px #42424255;
+    z-index: 2;
+ }
+ .menu{
+    position: absolute;
+    z-index: 1;
+    background-color: #fafafa;
+    width: 230px;
+    
+    right: -30px;
+    top: 40px;
+    box-shadow: 0 0 4px 1px #42424255;
+    border-radius: 5px;
+ }
+ .menu2{
+    position: relative;
+    z-index: 4;
+    width: 230px;
+    
+    background: #fafafa;
+    border-radius: 5px;
+ }
+ .menu-list{
+    padding: 8px 16px;
+    display: flex;
+ }
+ .menu-list:hover{
+    background-color: #42424211;
+ }
+ .menu-name{
+    margin-left: 10px;
+ }
+ .menu-list span{
+   font-size: 1.4rem;
+ }
+ .logout-menu{
+    border-top: 2px solid #42424244;
+ }
+ input:focus{
+    border: none;
+    outline: none;
+    color: #111;
+    font-weight: 400;
+ }

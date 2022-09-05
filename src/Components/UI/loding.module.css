@@ -1,0 +1,398 @@
+*{
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+:root
+
+.backdrop{
+    background: #c2c2c2;
+    position: fixed;
+    top:0;
+    left:0;
+    width: 100vw;
+    height: 100vw;
+}
+.loder-box{
+    position: fixed;
+    top: 40vh;
+    left: 45vw;
+    width: 110px;
+    height: 110px;
+    overflow: hidden;
+    border-radius: 50%;
+    z-index: 0;
+    background:transparent;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    animation: rotate 5s infinite;
+
+    
+    /* box-shadow: 0 0 10px 2px #576; */
+
+}
+
+
+.loder{
+    width: 90px;
+    height: 90px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 50%;
+    z-index: 5;
+    background-color: #c2c2c2;
+}
+
+@keyframes rotate {
+    from{
+        transform: rotate(0) scale(.8);
+    }
+    55%{
+        transform: rotate(720deg) scale(.6);
+    }
+    100%{
+        transform: rotate(0deg) scale(.8);
+    }
+}
+.circle{
+    width: 10%;
+    height: 10%;
+    background-color:transparent;
+    border:8px solid green;
+    border-radius: 50%;
+    animation: grow-shrink 2s infinite alternate;
+}
+
+/* @keyframes grow-shrink {
+    from {
+        width: 100%;
+        height: 100%;
+        border-color: rgb(165, 157, 41);
+    }
+    to{
+        width: 1%;
+        height: 1%;
+        border-color: gold;
+    }
+} */
+
+
+.spike{
+    background: #161719;
+    position: absolute;
+    width:10px;
+    height: 10px;
+    z-index: 9;
+    box-shadow: 0 0 10px 5px #f0f3;
+    animation: rotate 5s infinite;
+}
+
+#top{
+    animation: a1 10s infinite;
+    top: 55px;
+}
+#right{
+    animation: a3 10s infinite;
+    right: 55px;
+}
+
+#bottom{
+    bottom: 55px;
+    animation: a2 10s infinite;
+}
+#left{
+    animation: a4 10s infinite;
+    left: 55px;
+}
+
+@keyframes a1 {
+    0%{
+        top: 55px;
+        width: 10px;
+        height: 10px;
+    }
+    20%{
+        width: 10px;
+        height: 55px;
+        top: 0px;
+    }
+    50%{
+        width: 10px;
+        height: 10px;
+        top: 0px;
+    }
+    75%{
+        top: 0px;
+        width:10px;
+        height: 55px;
+    }
+    100%{
+        top: 55px;
+        width: 10px;
+        height: 10px;
+    }
+
+}
+@keyframes a2 {
+    0%{
+        bottom: 55px;
+        width: 10px;
+        height: 10px;
+    }
+    20%{
+        width: 10px;
+        height: 55px;
+        bottom: 0px;
+    }
+    50%{
+        width: 10px;
+        height: 10px;
+        bottom: 0px;
+    }
+    75%{
+        bottom: 0px;
+        width: 10px;
+        height: 55px;
+    }
+    100%{
+        bottom: 55px;
+        width: 10px;
+        height: 10px;
+    }
+}
+@keyframes a3 {
+    0%{
+        right: 55px;
+        width: 10px;
+        height: 10px;
+    }
+    20%{
+        width: 55px;
+        height: 10px;
+        right: 0px;
+    }
+    50%{
+        width: 10px;
+        height: 10px;
+        right: 0px;
+    }
+    75%{
+        right: 0px;
+        width: 55px;
+        height: 10px;
+    }
+    100%{
+        right: 55px;
+        width: 10px;
+        height: 10px;
+    }
+}
+@keyframes a4 {
+    0%{
+        left: 55px;
+        width: 10px;
+        height: 10px;
+    }
+    20%{
+        width: 55px;
+        height: 10px;
+        left: 0px;
+    }
+    50%{
+        width: 10px;
+        height: 10px;
+        left: 0px;
+    }
+    75%{
+        left: 0px;
+        width: 55px;
+        height: 10px;
+    }
+    100%{
+        left: 55px;
+        width: 10px;
+        height: 10px;
+    }
+}
+
+.round{
+    background: rgba(80, 1, 37, 0.952);
+    position: absolute;
+    width:10px;
+    height: 10px;
+    z-index: 1;
+}
+
+#top1{
+    animation: a11 10s infinite;
+    top: 55px;
+    left: 0;
+}
+#right1{
+    animation: a33 10s infinite;
+    right: 55px;
+    top: 0;
+}
+
+#bottom1{
+    bottom: 55px;
+    right: 0;
+    animation: a22 10s infinite;
+}
+#left1{
+    animation: a44 10s infinite;
+    left: 55px;
+    bottom: 0;
+}
+
+@keyframes a11 {
+    0%{
+        top: 55px;
+        width: 4px;
+        height: 4px;
+    }
+    20%{
+        width: 55px;
+        height: 55px;
+        top: 0px;
+    }
+    50%{
+        width: 55px;
+        height: 4px;
+        top: 0px;
+    }
+    75%{
+        top: 0px;
+        width: 55px;
+        height: 55px;
+    }
+    100%{
+        top: 55px;
+        width: 4px;
+        height: 4px;
+    }
+
+}
+@keyframes a22 {
+    0%{
+        bottom: 55px;
+        width: 4px;
+        height: 4px;
+    }
+    20%{
+        width: 55px;
+        height: 55px;
+        bottom: 0px;
+    }
+    50%{
+        width: 55px;
+        height: 4px;
+        bottom: 0px;
+    }
+    75%{
+        bottom: 0px;
+        width: 55px;
+        height: 55px;
+    }
+    100%{
+        bottom: 55px;
+        width: 4px;
+        height: 4px;
+    }
+}
+@keyframes a33 {
+    0%{
+        right: 55px;
+        width: 4px;
+        height: 4px;
+    }
+    20%{
+        width: 55px;
+        height: 55px;
+        right: 0px;
+    }
+    50%{
+        width: 4px;
+        height: 55px;
+        right: 0px;
+    }
+    75%{
+        right: 0px;
+        width: 55px;
+        height: 55px;
+    }
+    100%{
+        right: 55px;
+        width: 4px;
+        height: 4px;
+    }
+}
+@keyframes a44 {
+    0%{
+        left: 55px;
+        width: 4px;
+        height: 4px;
+    }
+    20%{
+        width: 55px;
+        height: 55px;
+        left: 0px;
+    }
+    50%{
+        width: 4px;
+        height: 55px;
+        left: 0px;
+    }
+    75%{
+        left: 0px;
+        width: 55px;
+        height: 55px;
+    }
+    100%{
+        left: 55px;
+        width: 4px;
+        height: 4px;
+    }
+}
+
+
+h1{
+   margin-right:20px;
+   font-weight: 200;
+   font-size: 1rem;
+}
+.loding{
+    display: flex;
+    justify-content:center ;
+    align-items: center;
+    position: absolute;
+    top: 55vh;
+    left: 46vw;
+}
+.spinner{
+    
+    width:10px;
+    height: 10px;
+    background-color: transparent;
+    border:2px solid #161719;
+    border-width: 5px 0 0px 5px;
+    border-radius: 50%;
+    animation: rotate2 1s infinite ;
+}
+
+@keyframes rotate2 {
+    from{
+        transform: rotate(0);
+    }
+    35% {
+        transform: rotate(720deg);
+    }
+    70%{
+        transform: rotate(360deg);
+    }
+    100%{
+        transform: rotate(0deg);
+    }
+}

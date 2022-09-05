@@ -1,0 +1,48 @@
+
+
+
+.comment-card{
+    display: flex;
+    justify-content: space-between;
+    margin: 10px 0;
+}
+
+.comment-card img{
+    width: 40px;
+    height: 40px;
+    object-fit: cover;
+    border-radius: 50%;
+    margin: 0 5px;
+}
+
+.details {
+    width: 70%;
+}
+.user-name{
+    display: inline;
+    font-size: .8rem;
+}
+.details-other{
+    display: flex;
+}
+.details-other span{
+    font-size: .8rem;
+    margin-right: 10px;
+    color: #666;
+}
+.liked {
+    font-variation-settings:
+    'FILL' 1,
+    'wght' 400,
+    'GRAD' 0,
+    'opsz' 48;
+    color: #f00;
+    font-size: 12px;
+    
+  }
+  .like{
+    width: 40px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }

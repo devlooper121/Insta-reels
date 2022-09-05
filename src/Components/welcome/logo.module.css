@@ -1,0 +1,11 @@
+.logoCont{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    margin-bottom: 40px;
+}
+
+.logo{
+    width: 150px;
+}

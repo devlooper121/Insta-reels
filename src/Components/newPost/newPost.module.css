@@ -1,0 +1,42 @@
+.uploadArea{
+    margin: auto;
+    width: 936px;
+    margin-top: 60px;
+    padding: 1rem;
+}
+
+#videoInput{
+    display: none;
+}
+.videoFrame{
+    margin: auto;
+    width: var(--videoCardWidth);
+    /* height: var(--videoCardHeight); */
+    background: #000;
+    /* position: relative; */
+    border-radius: 20px;
+    /* display: flex; */
+    /* flex-direction: column; */
+    
+}
+.btn span{
+    width: var(--videoCardWidth);
+    height: 40px;
+    text-align: center;
+    background: #f2f2f2;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 10px 10px 0 0 ;
+    box-shadow: inset 0 0 10px 1px #0003;
+    transition: all 150ms ease-in-out;
+}
+.videoFrame span:hover{
+    background: #ff0;
+    color: #00f;
+}
+.preview {
+    background: #f2f2f2;
+    max-width: var(--videoCardWidth);
+    max-height: var(--videoCardHeight);
+}

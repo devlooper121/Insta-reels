@@ -1,0 +1,66 @@
+.btn{
+    width: 65px;
+    height: 65px;
+    border-radius: 50%;
+    background-color: #0006;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    transition: all 200ms;
+    animation: pause 2s ease ;
+    opacity: 0;
+    position: absolute;
+    z-index: 100;
+    top: 45%;
+    left: 45%;    
+    /* text-shadow: 2px 2px 2px #0002; */
+    box-shadow: 2px 2px 2px #0002;
+}
+.play{
+    animation: play 1s ease ;
+    opacity: 0;
+}
+.btn span {
+    font-size: 3rem;
+    color: #fff;
+    font-weight: 100;
+    
+}
+
+@keyframes play {
+    0%{
+        opacity: 1;
+        transform: rotate(-90deg);
+    }
+    20%{
+        opacity: 1;
+        transform: rotate(0deg);
+    }
+    90%{
+        opacity: 1;
+        transform: rotate(0deg);
+    }
+    100%{
+        opacity: 0;
+        transform: rotate(0deg);
+    }
+    
+}
+
+@keyframes pause {
+    from{
+        opacity: 1;
+        transform: rotate(-45deg);
+    }
+    5%{
+        opacity: 1;
+        transform: rotate(0deg);
+    }
+    90%{
+        opacity: 1;
+    }
+    100%{
+        opacity: 0;
+    }
+}
