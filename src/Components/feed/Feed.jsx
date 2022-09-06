@@ -1,34 +1,38 @@
 import "./feed.css"
-import { useState, useContext } from "react";
+import { useState, useContext, useEffect } from "react";
 
 import { VideoCard } from "../videoCard/videocard"
 import { NavBar } from "../NavBar/NavBar"
+import Loding from "../UI/loding";
 
-
-
-import Button from "../UI/Button"
 import { AuthContext } from "../../Context/AuthContext";
 
-function Feed() {
-    const { reelsData } = useContext(AuthContext);
 
+import {getAllDataByCollection} from "../functions/util"
+
+function Feed() {
+    const {mainLoder} = useContext(AuthContext);
+    const [reelsData, setReelsData] = useState([]);
+    useEffect(() => {
+        (async()=>{
+            const data = await getAllDataByCollection("reels");
+            setReelsData(data)
+        })()
+    },[])
     return (
         <>
             <NavBar></NavBar>
 
-            <div className="mainContainer">
-                {reelsData && reelsData.map(selectedVideo => {
+            {mainLoder ? <Loding/> : <div className="mainContainer">
+                {reelsData && reelsData.map(reelsData => {
                     return <VideoCard
-                        key={selectedVideo.key}
-                        url={selectedVideo.value.url}
+                        key={reelsData.id}
                         title={"unknown"}
-                        likes={selectedVideo.value.likes}
-                        comments={selectedVideo.value.comments}
-                        uid={selectedVideo.value.uid}
-                        id={selectedVideo.key}
+                        data={reelsData.data}
+                        id={reelsData.id}
                     ></VideoCard>
                 })}
-            </div>
+            </div>}
         </>
     )
 }

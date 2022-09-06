@@ -82,7 +82,7 @@ const ProfileSetting = () => {
     }
     const submitHandler = async () => {
         // console.log("changed");
-
+        
         const textData = {
             name: entredName === "" ? user.name : entredName,
             userId: entredUID === "" ? user.userId : entredUID

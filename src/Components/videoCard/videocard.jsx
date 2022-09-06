@@ -8,19 +8,33 @@ import "./videoCard.css"
 import { useContext } from "react"
 import {AuthContext} from "../../Context/AuthContext"
 
+// firebase
+import { db } from "../../firebase"
+import { doc, onSnapshot } from "firebase/firestore";
+
 export const VideoCard = (props) => {
     const videoRef = useRef();
     const {cUser} = useContext(AuthContext);
     const [playing, setPlay] = useState(false);
-    const [videoShrink, setVideoShrink] = useState(false);
+    const [commentOn, setCommentOn] = useState(false);
     const [user, setUser] = useState(null); // jiska reels hai wo user
+
+    const [reelData, setReelsData] = useState(props.data)
+    // console.log(props.data)
     const profileImgUrl = user ? user.profileImgUrls[0]:"https://idronline.org/wp-content/uploads/2021/01/Screen-Shot-2019-02-19-at-1.23.40-PM-300x300-3.jpg.webp";
     const userName = user ? user.userId : "loding..."
+    useEffect(()=>{
+        onSnapshot(doc(db, "reels", props.id), (doc) => {
+            // console.log(doc.data());
+            setReelsData(doc.data())
+        });
+    },[props.id])
+
     useEffect(() => {
         (async () => {
             try {
                 // console.log(props.uid);
-                const user = await findUserByUID(props.uid);
+                const user = await findUserByUID(reelData.uid);
                 setUser(user)
                 // console.log(user);
             } catch (err) {
@@ -28,6 +42,7 @@ export const VideoCard = (props) => {
             }
         })()
     }, [])
+    
     const playPause = () => {
         if (playing) {
             videoRef.current.play()
@@ -39,11 +54,19 @@ export const VideoCard = (props) => {
     }
     const likeTheVideoHandler = (e) =>{
         e.stopPropagation();
-        console.log("like");
-        if(!props.likes.includes(cUser.uid))
+        
+        if(!reelData.likes.includes(cUser.uid)){
+            console.log("like");
             updateDocByCollection("reels", props.id, {
-                likes:[...props.likes, cUser.uid]
+                likes:[...reelData.likes, cUser.uid]
             })
+        }else{
+            console.log("Dis-like");
+            updateDocByCollection("reels", props.id, {
+                likes:reelData.likes.filter(uid=>uid!==cUser.uid)
+            })
+        }
+            
     }
     return (
         <div onClick={() => { console.log("actiom"); return 0 }} className="action">
@@ -59,10 +82,10 @@ export const VideoCard = (props) => {
             <ul className="likeShare">
                 <li onClick={likeTheVideoHandler} className="like-list"><span className="material-symbols-rounded fill">
                     favorite
-                </span>{props.likes.length}</li>
-                <li onClick={() => setVideoShrink(true)} className="like-list"><span className="material-symbols-rounded fill">
+                </span>{reelData.likes.length}</li>
+                <li onClick={() => setCommentOn(true)} className="like-list"><span className="material-symbols-rounded fill">
                     mode_comment
-                </span>{props.comments.length}</li>
+                </span>{reelData.comments.length}</li>
                 {/* <li className="like-list"><span className="material-symbols-rounded">
                     send
                 </span></li>
@@ -74,16 +97,17 @@ export const VideoCard = (props) => {
             <video 
                 loop
                 autoPlay
-                className={videoShrink ? "shrink video" : "video"} 
-                onClick={(e) => { console.log("video");setVideoShrink(false); return playPause() }} 
-                src={props.url}
+                className={"video"} 
+                onClick={(e) => { console.log("video");setCommentOn(false); return playPause() }} 
+                src={reelData.url}
                 ref={videoRef}
                 >
             </video>
-            {videoShrink && 
+            {commentOn && 
                 <Comment 
-                    onBack={()=>setVideoShrink(false)}
-                    commentArr={props.comments}
+                    onBack={()=>setCommentOn(false)}
+                    commentArr={reelData.comments}
+                    permision={reelData.isCommentable}
                     profileImgUrl={profileImgUrl}
                     id={props.id}
                 ></Comment>}

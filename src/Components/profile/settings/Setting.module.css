@@ -29,8 +29,8 @@
 }
 .editLabel{
     position: absolute;
-    right: 0;
-    top: 0;
+    right: 15px;
+    top: 15px;
 }
 .editLabel span {
     width: 30px;
@@ -38,11 +38,13 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    background-color: #0001;
-    border-radius: 0 0 0 50%;
+    background-color: #8686ff;
+    color: #fff;
+    box-shadow: 0 0 5px 1px #777;
+    border-radius: 50%;
 }
 .editLabel span:hover{
-    background-color: #FF0;
-    color: #00f;
+    background-color: #acfff7;
+    color: rgb(136, 136, 246);
     cursor: pointer;
 }

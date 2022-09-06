@@ -1,21 +1,28 @@
 import "./profile.css"
-import React, { useContext, useState } from "react"
+import React, { useContext, useEffect, useState } from "react"
 
 // Context import from AuthContext.js for logged user info and main loder
 import { AuthContext } from "../../Context/AuthContext"
 
 import { NavBar } from "../NavBar/NavBar";
 import PostItem from "./PostItem";
+import Loding from "../UI/loding";
 
 function Profile() {
     const { cUser, reelsData } = useContext(AuthContext);
     const user = cUser.user;
-
-
+    const[loding, setLoding] = useState(true);
+    useEffect(()=>{
+        if(user){
+            setLoding(false);
+        }else{
+            setLoding(true)
+        }
+    },[user])
     return (
         <>  
             <NavBar></NavBar>
-            <div className="profile-box">
+            {loding ? <Loding/> :<div className="profile-box">
                 <div className="profile-container">
                     <div className="pimg-container">
                         <div className="img-box">
@@ -48,7 +55,7 @@ function Profile() {
                         />)
                     })}
                 </div> */}
-            </div>
+            </div>}
         </>
     )
 }

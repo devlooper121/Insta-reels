@@ -15,6 +15,7 @@ export function AuthContextProvider(props) {
     useEffect(()=>{
         onAuthStateChanged(auth, (user)=>{
             if(user){
+                setCUser({uid:user.uid});
                 (async () => {
                     try {
                         // console.log(props.uid);
@@ -24,17 +25,18 @@ export function AuthContextProvider(props) {
                     } catch (err) {
                         setError(err)
                     }
+                    setMainLoder(false);
                 })()
             }else{
                 setCUser(null);
             }
-            setMainLoder(false);
+            
         })
-    }, [auth])
+    }, [])
 
 
     return (
-        <AuthContext.Provider value={{cUser, error}}>
+        <AuthContext.Provider value={{cUser, error, mainLoder}}>
             {mainLoder === false && props.children // show children only if mainloder is false
             }
         </AuthContext.Provider>

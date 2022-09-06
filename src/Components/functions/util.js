@@ -1,9 +1,9 @@
 import { auth, db, database } from "../../firebase"
 import { signOut } from "firebase/auth"
-import { doc, getDoc, setDoc, addDoc, collection, updateDoc, Timestamp } from "firebase/firestore";
+import { doc, getDoc, setDoc, addDoc, collection, updateDoc, Timestamp, getDocs } from "firebase/firestore";
 import Compress from "compress.js";
 // realtime
-import {ref, push, set  } from "firebase/database";
+import { ref, push, set } from "firebase/database";
 // Auth functions
 export const logOut = async () => {
     try {
@@ -28,12 +28,12 @@ export const findUserByUID = async (uid) => {
 }
 // set doc with your id
 
-export const setDataWithID = async (collection,id,data)=>{
+export const setDataWithID = async (collection, id, data) => {
     await setDoc(doc(db, collection, id), data);
 }
 
 // set doc and get a uid 
-export const setData = async (collectionName,data)=>{
+export const setData = async (collectionName, data) => {
     const docRef = await addDoc(collection(db, collectionName), {
         ...data,
         dateExample: Timestamp.fromDate(new Date())
@@ -44,13 +44,13 @@ export const setData = async (collectionName,data)=>{
 
 // update doc by collection and id
 
-export const updateDocByCollection = async (collectionName, id, data) =>{
-    
+export const updateDocByCollection = async (collectionName, id, data) => {
+    // console.log(collectionName, id, data);
     const docRef = doc(db, collectionName, id);
-    try{
+    try {
         await updateDoc(docRef, data);
-        console.log("hua");
-    }catch(err){
+        // console.log("hua");
+    } catch (err) {
         console.log(err);
         throw new Error(err)
     }
@@ -62,6 +62,20 @@ export const writeRTD = (path, data) => {
     const dataRef = ref(database, path);
     const newDataRef = push(dataRef);
     set(newDataRef, data);
+}
+
+
+// get doc
+
+export const getAllDataByCollection = async (collectionName) => {
+    const querySnapshot = await getDocs(collection(db, collectionName));
+    const allDataArr = []
+    querySnapshot.forEach((doc) => {
+        // doc.data() is never undefined for query doc snapshots
+        // console.log(doc.id, " => ", doc.data());
+        allDataArr.push({id:doc.id, data:doc.data()})
+    });
+    return allDataArr;
 }
 
 // export const writeRTD = (collectionName, data) => {
@@ -94,29 +108,29 @@ export const resizeFile = async (file) => {
 };
 
 export const timeSince = (date) => {
-    
+
     let seconds = Math.floor((new Date() - date) / 1000);
-  
+
     let interval = seconds / 31536000;
-  
+
     if (interval > 1) {
-      return Math.floor(interval) + " years";
+        return Math.floor(interval) + " years";
     }
     interval = seconds / 2592000;
     if (interval > 1) {
-      return Math.floor(interval) + " months";
+        return Math.floor(interval) + " months";
     }
     interval = seconds / 86400;
     if (interval > 1) {
-      return Math.floor(interval) + " days";
+        return Math.floor(interval) + " days";
     }
     interval = seconds / 3600;
     if (interval > 1) {
-      return Math.floor(interval) + " hours";
+        return Math.floor(interval) + " hours";
     }
     interval = seconds / 60;
     if (interval > 1) {
-      return Math.floor(interval) + " minutes";
+        return Math.floor(interval) + " minutes";
     }
     return Math.floor(seconds) + " seconds";
-  }
+}

@@ -3,7 +3,7 @@
     --videoCardHeight : 882px;
 }
 .action{
-    width: calc(var(--videoCardWidth));
+    width: var(--videoCardWidth);
     height: var(--videoCardHeight);
     position: relative;
     z-index: 10;
@@ -15,6 +15,7 @@
     justify-content: center;
     align-items: center;
     overflow: hidden;
+    scroll-snap-align: start;
 }
 .video-info{
     width: 75%;
