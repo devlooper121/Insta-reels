@@ -4,9 +4,10 @@ import { findUserByUID, timeSince } from "../functions/util";
 
 const CommentCard = (props) => {
     const { uid, msg, date, likes } = props;
-    const [user, setUser] = useState(null);
+    const [user, setUser] = useState(null); // it is commenter (user)
     const profileImgUrl = user ? user.profileImgUrls[0]:"https://idronline.org/wp-content/uploads/2021/01/Screen-Shot-2019-02-19-at-1.23.40-PM-300x300-3.jpg.webp";
     const userName = user ? user.userId : "loding..."
+    // getting commenter details by uid in comments
     useEffect(() => {
         (async () => {
             try {

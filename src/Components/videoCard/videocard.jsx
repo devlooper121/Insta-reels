@@ -13,7 +13,7 @@ export const VideoCard = (props) => {
     const {cUser} = useContext(AuthContext);
     const [playing, setPlay] = useState(false);
     const [videoShrink, setVideoShrink] = useState(false);
-    const [user, setUser] = useState(null);
+    const [user, setUser] = useState(null); // jiska reels hai wo user
     const profileImgUrl = user ? user.profileImgUrls[0]:"https://idronline.org/wp-content/uploads/2021/01/Screen-Shot-2019-02-19-at-1.23.40-PM-300x300-3.jpg.webp";
     const userName = user ? user.userId : "loding..."
     useEffect(() => {

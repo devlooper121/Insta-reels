@@ -1,35 +1,27 @@
 import React from "react"
-import { useState, useContext, useEffect } from "react"
+import { useState, useContext} from "react"
 import { NavBar } from "../NavBar/NavBar"
 import Button from "../UI/Button"
-import Loding from "../UI/loding"
 
 import { AuthContext } from "../../Context/AuthContext"
 
 import styles from "./newPost.module.css"
 import ProgressBar from "../UI/ProgressBar"
 // util
-import { findUserByUID, setData, updateDocByCollection, writeRTD } from "../functions/util"
-// // firebase
-// import { db } from "../../firebase";
-// import { doc, updateDoc } from "firebase/firestore";
-// //firebase storage
-// import { storage } from "../../firebase";
-// import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
+import {setData, updateDocByCollection } from "../functions/util"
+
 import useFileUpload from "../../Hooks/uploadFile-hook"
 import DropMessage from "../Bacdrop/dropMessage"
-import Logo from "../welcome/logo"
 
 
 const NewPost = (props) => {
     const {cUser} = useContext(AuthContext);
-    const [user, setUser] = useState(null);
-    const [loding, setLoding] = useState(true);
+    const user = cUser.user;
     const [videoUrl, setVideoUrl] = useState("");
     const [videoFile, setVideoFile] = useState(null);
     // const [videoFile, setVideoFile] = useState(null);
     // upload percentage
-    
+    // using custom hook for file upload
     const {
         uploadStatus:uploadPercentage,
         setUploadStatus,
@@ -37,19 +29,7 @@ const NewPost = (props) => {
 
     } = useFileUpload();
     
-    useEffect(() => {
-        (async () => {
-            try {
-                const user = await findUserByUID(cUser.uid);
-                setUser(user)
-                setLoding(false)
-            } catch (err) {
-                console.log(err.message);
-                setLoding(false)
-            }
-        })()
-        
-    }, [cUser])
+
     const videoInputHandler = (e) => {
 
         // console.log(e.target.files);
@@ -75,14 +55,7 @@ const NewPost = (props) => {
                 likes:[],
                 isCommentable:true
             });
-            const newdata = await writeRTD("reels",{
-                url:url,
-                uid:cUser.uid,
-                comments:{},
-                likes:{},
-                isCommentable:true
-            })
-            console.log(newdata);
+            
             updateDocByCollection("users", cUser.uid,{
                 postIds:[videoId, ...user.postIds]
             })
@@ -93,7 +66,7 @@ const NewPost = (props) => {
         <React.Fragment>
             {uploadPercentage ?  <ProgressBar value={uploadPercentage}/> : ""}
             <NavBar />
-            {loding ? <Loding/>: <div className={styles["uploadArea"]}>
+            <div className={styles["uploadArea"]}>
                 <div className={styles["videoFrame"]}>
                     <label htmlFor={styles.videoInput} className={styles.btn} ><span className="material-symbols-rounded">
                         {videoUrl ? "cached" : "add"}
@@ -105,7 +78,7 @@ const NewPost = (props) => {
                     </span></Button>}
                 </div>
 
-            </div>}
+            </div>
             {uploadPercentage===100 && <DropMessage onClick={()=>setUploadStatus(0)} msg={"Video uploaded successfully!"} />}
         </React.Fragment>
     )
