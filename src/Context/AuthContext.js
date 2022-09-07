@@ -10,33 +10,52 @@ export const AuthContext = React.createContext();
 export function AuthContextProvider(props) {
     const [cUser, setCUser] = useState(null);
     const [error, setError] = useState(null);
-    const [mainLoder,setMainLoder] = useState(true);
+    const [mainLoder, setMainLoder] = useState(true);
+    const [onlineStatus, setOnlineStatus] = useState(true);
+
+    useEffect(() => {
+        window.addEventListener("offline", () => {
+            setOnlineStatus(false);
+        });
+        window.addEventListener("online", () => {
+            setOnlineStatus(true);
+        });
+
+        return () => {
+            window.removeEventListener("offline", () => {
+                setOnlineStatus(false);
+            });
+            window.removeEventListener("online", () => {
+                setOnlineStatus(true);
+            });
+        };
+    }, []);
     // getting user auth
-    useEffect(()=>{
-        onAuthStateChanged(auth, (user)=>{
-            if(user){
-                setCUser({uid:user.uid});
+    useEffect(() => {
+        onAuthStateChanged(auth, (user) => {
+            if (user) {
+                setCUser({ uid: user.uid });
                 (async () => {
                     try {
                         // console.log(props.uid);
                         const userDetails = await findUserByUID(user.uid);
-                        setCUser({user:userDetails, uid:user.uid})
+                        setCUser({ user: userDetails, uid: user.uid })
                         // console.log(user);
                     } catch (err) {
                         setError(err)
                     }
                     setMainLoder(false);
                 })()
-            }else{
+            } else {
                 setCUser(null);
             }
-            
+
         })
     }, [])
 
 
     return (
-        <AuthContext.Provider value={{cUser, error, mainLoder}}>
+        <AuthContext.Provider value={{ cUser, error, mainLoder, onlineStatus}}>
             {mainLoder === false && props.children // show children only if mainloder is false
             }
         </AuthContext.Provider>

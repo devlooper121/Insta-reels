@@ -27,7 +27,7 @@ const CommentCard = (props) => {
         else{
             setUser(cUser.user);
         }
-    }, [])
+    }, [cUser, uid])
     const likeTheCommentHandler = (e) =>{
         e.stopPropagation();
         
@@ -44,6 +44,7 @@ const CommentCard = (props) => {
         }
             
     }
+    const likedStyle = likes.includes(cUser.uid) ? `material-symbols-rounded ${styles.liked}`: `material-symbols-rounded ${styles.dis}`
     return (
         <div className={styles["comment-card"]}>
             <img  src={profileImgUrl} alt="commenter" />
@@ -59,7 +60,7 @@ const CommentCard = (props) => {
                 </div>
             </div>
             <div className={styles.like}>
-            <span className={`material-symbols-rounded ${styles.liked}`} onClick={likeTheCommentHandler}>
+            <span className={likedStyle} onClick={likeTheCommentHandler}>
                 favorite
             </span>
             </div>

@@ -11,6 +11,7 @@ import { AuthContext } from "../../Context/AuthContext";
 import {getAllDataByCollection} from "../functions/util"
 
 function Feed() {
+    const [mute, setToMute] = useState(true);
     const {mainLoder} = useContext(AuthContext);
     const [reelsData, setReelsData] = useState([]);
     useEffect(() => {
@@ -30,6 +31,8 @@ function Feed() {
                         title={"unknown"}
                         data={reelsData.data}
                         id={reelsData.id}
+                        mute={mute}
+                        setToMute={setToMute}
                     ></VideoCard>
                 })}
             </div>}

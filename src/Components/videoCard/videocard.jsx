@@ -6,29 +6,35 @@ import { findUserByUID, updateDocByCollection } from "../functions/util"
 
 import "./videoCard.css"
 import { useContext } from "react"
-import {AuthContext} from "../../Context/AuthContext"
+import { AuthContext } from "../../Context/AuthContext"
 
 // firebase
 import { db } from "../../firebase"
 import { doc, onSnapshot } from "firebase/firestore";
+// inview
+import { useInView } from 'react-intersection-observer';
 
 export const VideoCard = (props) => {
-    const videoRef = useRef();
-    const {cUser} = useContext(AuthContext);
-    const [playing, setPlay] = useState(false);
+    const { ref, inView, entry: videoRef } = useInView({
+        /* Optional options */
+        threshold: 1,
+    });
+
+    const { cUser } = useContext(AuthContext);
+    const {mute, setToMute} = props;
     const [commentOn, setCommentOn] = useState(false);
     const [user, setUser] = useState(null); // jiska reels hai wo user
 
     const [reelData, setReelsData] = useState(props.data)
     // console.log(props.data)
-    const profileImgUrl = user ? user.profileImgUrls[0]:"https://idronline.org/wp-content/uploads/2021/01/Screen-Shot-2019-02-19-at-1.23.40-PM-300x300-3.jpg.webp";
+    const profileImgUrl = user ? user.profileImgUrls[0] : "https://idronline.org/wp-content/uploads/2021/01/Screen-Shot-2019-02-19-at-1.23.40-PM-300x300-3.jpg.webp";
     const userName = user ? user.userId : "loding..."
-    useEffect(()=>{
+    useEffect(() => {
         onSnapshot(doc(db, "reels", props.id), (doc) => {
             // console.log(doc.data());
             setReelsData(doc.data())
         });
-    },[props.id])
+    }, [props.id])
 
     useEffect(() => {
         (async () => {
@@ -41,46 +47,55 @@ export const VideoCard = (props) => {
                 console.log(err.message);
             }
         })()
-    }, [])
-    
-    const playPause = () => {
-        if (playing) {
-            videoRef.current.play()
-            setPlay(false)
+    }, [reelData.uid])
+
+    console.log(inView, videoRef);
+    if(videoRef && !inView){
+        videoRef.target.pause()
+    }
+    if(videoRef && inView){
+        videoRef.target.play()
+    }
+
+    const muteUnmute = () => {
+        if (mute) {
+            videoRef.target.muted=false
+            setToMute(false)
         } else {
-            videoRef.current.pause()
-            setPlay(true)
+            videoRef.target.muted=true
+            setToMute(true)
         }
     }
-    const likeTheVideoHandler = (e) =>{
+    const likeTheVideoHandler = (e) => {
         e.stopPropagation();
-        
-        if(!reelData.likes.includes(cUser.uid)){
+
+        if (!reelData.likes.includes(cUser.uid)) {
             console.log("like");
             updateDocByCollection("reels", props.id, {
-                likes:[...reelData.likes, cUser.uid]
+                likes: [...reelData.likes, cUser.uid]
             })
-        }else{
+        } else {
             console.log("Dis-like");
             updateDocByCollection("reels", props.id, {
-                likes:reelData.likes.filter(uid=>uid!==cUser.uid)
+                likes: reelData.likes.filter(uid => uid !== cUser.uid)
             })
         }
-            
+
     }
+    const likedStyle = reelData.likes.includes(cUser.uid) ? `material-symbols-rounded liked` : `material-symbols-rounded dis`
     return (
         <div onClick={() => { console.log("actiom"); return 0 }} className="action">
             <div className="video-info">
+                <p className="post-info"><span className="material-symbols-rounded fill">
+                    music_note
+                </span>{props.title}</p>
                 <div className="post-info">
                     <img className="post-profile" src={profileImgUrl} alt="" />
                     <p className="post-name">{userName}</p>
                 </div>
-                <p className="post-info"><span className="material-symbols-rounded">
-                    music_note
-                </span>{props.title}</p>
             </div>
             <ul className="likeShare">
-                <li onClick={likeTheVideoHandler} className="like-list"><span className="material-symbols-rounded fill">
+                <li onClick={likeTheVideoHandler} className="like-list"><span className={likedStyle}>
                     favorite
                 </span>{reelData.likes.length}</li>
                 <li onClick={() => setCommentOn(true)} className="like-list"><span className="material-symbols-rounded fill">
@@ -93,19 +108,20 @@ export const VideoCard = (props) => {
                     more_vert
                 </span></li> */}
             </ul>
-            <YNBtn status={playing} onClick={playPause}/>
-            <video 
+            <YNBtn status={mute} onClick={muteUnmute} />
+            <video
                 loop
                 autoPlay
-                className={"video"} 
-                onClick={(e) => { console.log("video");setCommentOn(false); return playPause() }} 
+                className={"video"}
+                onClick={(e) => { console.log("video"); setCommentOn(false); return muteUnmute() }}
                 src={reelData.url}
-                ref={videoRef}
-                >
+                ref={ref}
+                muted={mute}
+            >
             </video>
-            {commentOn && 
-                <Comment 
-                    onBack={()=>setCommentOn(false)}
+            {commentOn &&
+                <Comment
+                    onBack={() => setCommentOn(false)}
                     commentArr={reelData.comments}
                     permision={reelData.isCommentable}
                     profileImgUrl={profileImgUrl}

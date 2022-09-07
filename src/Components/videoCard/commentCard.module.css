@@ -1,13 +1,10 @@
-
-
-
-.comment-card{
+.comment-card {
     display: flex;
     justify-content: space-between;
     margin: 10px 0;
 }
 
-.comment-card img{
+.comment-card img {
     width: 40px;
     height: 40px;
     object-fit: cover;
@@ -15,34 +12,49 @@
     margin: 0 5px;
 }
 
+.content {
+    margin-bottom: 10px;
+}
+
 .details {
     width: 70%;
 }
-.user-name{
+
+.user-name {
     display: inline;
-    font-size: .8rem;
+    font-size: 1rem;
 }
-.details-other{
+
+.details-other {
     display: flex;
 }
-.details-other span{
+
+.details-other span {
     font-size: .8rem;
     margin-right: 10px;
     color: #666;
 }
-.liked {
-    font-variation-settings:
-    'FILL' 1,
-    'wght' 400,
-    'GRAD' 0,
-    'opsz' 48;
-    color: #f00;
-    font-size: 12px;
-    
-  }
-  .like{
+
+.like {
     width: 40px;
     display: flex;
     justify-content: center;
     align-items: center;
-  }
+    cursor: pointer;
+}
+
+.dis{
+    color: #ccc;
+    font-size: 1.6rem;
+}
+
+.liked {
+    font-variation-settings:
+        'FILL' 1,
+        'wght' 400,
+        'GRAD' 0,
+        'opsz' 48;
+    color: #f00;
+    font-size: 1.6rem;
+
+}

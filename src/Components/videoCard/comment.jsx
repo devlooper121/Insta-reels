@@ -22,7 +22,7 @@ const Comment = (props) => {
             // console.log("All comments: ", data);
             setCommentArr(data)
         });
-    }, [])
+    }, [props.id])
     // console.log(props.commentArr);
     const postComment = async () => {
         console.log(inputRef.current.innerText);
@@ -62,7 +62,10 @@ const Comment = (props) => {
             <div className={styles.newComment}>
                 <img src={user.profileImgUrls[0]} alt="profile" />
                 <span ref={inputRef} className={styles.input} contentEditable ></span>
-                <button onClick={postComment} type="button">post</button>
+                {/* <button onClick={postComment} type="button">post</button> */}
+                <span onClick={postComment} className={`material-symbols-rounded ${styles.button}`}>
+                    send
+                </span>
             </div>
         </div>
     )

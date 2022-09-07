@@ -3,13 +3,13 @@ import styles from "./PlayPauseBtn.module.css"
 
 const PlayPauseBtn = (props) => {
 
-    let status = "pause";
+    let status = "volume_off";
     let btnClass = `${styles.btn} ${props.className}`
     if(props.status){
-        status = "pause"
+        status = "volume_off"
         btnClass = `${styles.btn} ${props.className}`
     }else{
-        status = "play_arrow"
+        status = "volume_up"
         btnClass = `${styles.btn} ${props.className} ${styles.play}`
     }
     return (
