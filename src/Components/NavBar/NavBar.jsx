@@ -68,7 +68,7 @@ export const NavBar = () => {
                         </span>
                         {menuVisible !== true ? "" :
                             <>
-                                <Backdrop1 onclick={changeVisibility} />
+                                <Backdrop1 onclick={changeVisibility} z={1}/>
                                 <Menu></Menu>
                             </>
                         }

@@ -9,10 +9,11 @@ import { AuthContext } from "../../Context/AuthContext";
 
 
 import {getAllDataByCollection} from "../functions/util"
+import ConfirmButton from "../Bacdrop/ConfirmButton";
 
 function Feed() {
     const [mute, setToMute] = useState(true);
-    const {mainLoder} = useContext(AuthContext);
+    const {mainLoder, onlineStatus} = useContext(AuthContext);
     const [reelsData, setReelsData] = useState([]);
     useEffect(() => {
         (async()=>{
@@ -20,11 +21,15 @@ function Feed() {
             setReelsData(data)
         })()
     },[])
-    return (
-        <>
-            <NavBar></NavBar>
 
-            {mainLoder ? <Loding/> : <div className="mainContainer">
+    console.log(onlineStatus);
+    return (
+        onlineStatus ?"You are ofline": 
+            <>
+            
+            <NavBar></NavBar>
+            {mainLoder ? <Loding/> : 
+            <div className="mainContainer">
                 {reelsData && reelsData.map(reelsData => {
                     return <VideoCard
                         key={reelsData.id}
@@ -36,7 +41,8 @@ function Feed() {
                     ></VideoCard>
                 })}
             </div>}
-        </>
+            
+            </>
     )
 }
 

@@ -2,7 +2,6 @@ import styles from "./PlayPauseBtn.module.css"
 
 
 const PlayPauseBtn = (props) => {
-
     let status = "volume_off";
     let btnClass = `${styles.btn} ${props.className}`
     if(props.status){

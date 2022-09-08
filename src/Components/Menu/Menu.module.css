@@ -22,7 +22,7 @@
  }
  .menu2{
     position: relative;
-    z-index: 4;
+    z-index: 20;
     width: 230px;
     
     background: #fafafa;

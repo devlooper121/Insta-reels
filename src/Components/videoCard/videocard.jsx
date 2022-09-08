@@ -21,7 +21,7 @@ export const VideoCard = (props) => {
     });
 
     const { cUser } = useContext(AuthContext);
-    const {mute, setToMute} = props;
+    const { mute, setToMute } = props;
     const [commentOn, setCommentOn] = useState(false);
     const [user, setUser] = useState(null); // jiska reels hai wo user
 
@@ -29,6 +29,8 @@ export const VideoCard = (props) => {
     // console.log(props.data)
     const profileImgUrl = user ? user.profileImgUrls[0] : "https://idronline.org/wp-content/uploads/2021/01/Screen-Shot-2019-02-19-at-1.23.40-PM-300x300-3.jpg.webp";
     const userName = user ? user.userId : "loding..."
+
+
     useEffect(() => {
         onSnapshot(doc(db, "reels", props.id), (doc) => {
             // console.log(doc.data());
@@ -49,20 +51,22 @@ export const VideoCard = (props) => {
         })()
     }, [reelData.uid])
 
-    console.log(inView, videoRef);
-    if(videoRef && !inView){
+    // console.log(inView, videoRef);
+    if (videoRef && !inView) {
+        videoRef.target.currentTime = 0;
         videoRef.target.pause()
+        
     }
-    if(videoRef && inView){
+    if (videoRef && inView) {
         videoRef.target.play()
     }
-
+    
     const muteUnmute = () => {
         if (mute) {
-            videoRef.target.muted=false
+            videoRef.target.muted = false
             setToMute(false)
         } else {
-            videoRef.target.muted=true
+            videoRef.target.muted = true
             setToMute(true)
         }
     }

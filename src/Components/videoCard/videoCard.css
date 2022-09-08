@@ -20,7 +20,7 @@
     min-height: 150px;
     min-width: var(--shorts-min-width);
     position: relative;
-    z-index: 10;
+    z-index: 0;
     /* margin: auto; */
     border-radius: 15px;
     

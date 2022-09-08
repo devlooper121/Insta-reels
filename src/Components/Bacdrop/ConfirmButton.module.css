@@ -1,0 +1,30 @@
+.container{
+    width: fit-content;
+    height: fit-content;
+    padding: 12px;
+    background-color: #fff;
+    border-radius: 15px;
+    box-shadow: 0 0 5px 1px #0002;
+}
+
+.message{
+    min-width: 250px;
+    min-height: 100px;
+}
+.btn_container{
+    min-width: 250px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.btn1{
+    width: 45%;
+    background-color: #ddd;
+    color: #161716;
+    border: 1px solid;
+}
+.btn2{
+    width: 45%;
+    color: #fff;
+    border:none;
+}

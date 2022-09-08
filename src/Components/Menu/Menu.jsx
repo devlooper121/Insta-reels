@@ -1,10 +1,28 @@
+import { useState } from "react"
 import { Link } from "react-router-dom"
 import { logOut } from "../functions/util"
-
+import ConfirmButton from "../Bacdrop/ConfirmButton"
 import styles from "./Menu.module.css"
 
 export const Menu = () => {
+    const [logoutClick, setLogoutClick] = useState(false);
+    const logOutHandler = (e) => {
+        e.stopPropagation();
+        setLogoutClick(true);
+    }
+    const cancle = (e) => {
+        e.stopPropagation();
+        setLogoutClick(false);
+    }
     return (
+        logoutClick ? <ConfirmButton 
+        message="Are you sure want to logout!"
+        cancelColor="green"
+        confirmColor="#a11"
+        onCancle={cancle}
+        onConfirm={logOut}
+        z={11}
+    ></ConfirmButton> :
         <div className={styles.menu}>
             <div className={styles["square"]}></div>
             <div className={styles["menu2"]}>
@@ -32,7 +50,7 @@ export const Menu = () => {
                 </div>
                 </Link>
 
-                <div onClick={logOut} className={`${styles["menu-list"]} ${ styles["logout-menu"]}`}>
+                <div onClick={logOutHandler} className={`${styles["menu-list"]} ${ styles["logout-menu"]}`}>
                     logout
                 </div>
             </div>

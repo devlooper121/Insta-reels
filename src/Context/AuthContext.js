@@ -11,7 +11,7 @@ export function AuthContextProvider(props) {
     const [cUser, setCUser] = useState(null);
     const [error, setError] = useState(null);
     const [mainLoder, setMainLoder] = useState(true);
-    const [onlineStatus, setOnlineStatus] = useState(true);
+    const [onlineStatus, setOnlineStatus] = useState(null);
 
     useEffect(() => {
         window.addEventListener("offline", () => {
