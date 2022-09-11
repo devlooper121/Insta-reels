@@ -10,7 +10,8 @@ import {getStorage} from "firebase/storage"
 import { getDatabase } from "firebase/database";
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
-
+// firebase app check
+const { initializeAppCheck, ReCaptchaV3Provider } = require("firebase/app-check");
 // Your web app's Firebase configuration
 
 
@@ -31,3 +32,10 @@ export const auth = getAuth(app);
 export const db = getFirestore(app);
 export const storage = getStorage(app);
 export const database = getDatabase(app);
+// const appCheck = initializeAppCheck(app, {
+//   provider: new ReCaptchaV3Provider('abcdefghijklmnopqrstuvwxy-1234567890abcd'),
+
+//   // Optional argument. If true, the SDK automatically refreshes App Check
+//   // tokens as needed.
+//   isTokenAutoRefreshEnabled: true
+// });

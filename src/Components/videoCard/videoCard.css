@@ -33,7 +33,7 @@
 
 }
 .video-info{
-    width: 75%;
+    width: 90%;
     position: absolute;
     bottom: 12px;
     left: 12px;
@@ -102,19 +102,20 @@
 
 .video {
     width: var(--shorts-player-width);
-    /* height: var(--videoCardHeight); */
+    height: var(--shorts-player-height);
     z-index: 0;
     top: 0;
     left: 0;
     background: #000;
     border-radius: 5px; 
-    object-fit: fill;
+    object-fit: contain;
 
 }
 
 .shrink{
-    transform: scale(.35)
-    translateY(-90%);
+    height: calc(var(--shorts-player-height)/3);
+    width: calc(var(--shorts-player-height)/3 * 9/16);
+    margin-bottom: calc(var(--shorts-player-height)*2/3);
 }
 .dis{
     color: #ccc;

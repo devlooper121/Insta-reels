@@ -368,8 +368,9 @@ h1{
     justify-content:center ;
     align-items: center;
     position: absolute;
-    top: 55vh;
+    top: 45vh;
     left: 46vw;
+    font-size: 1rem;
 }
 .spinner{
     

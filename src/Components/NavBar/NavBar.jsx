@@ -5,10 +5,16 @@ import { Link } from "react-router-dom";
 
 import styles from "./navbar.module.css"
 import { Backdrop1, BackDrop2 } from "../Bacdrop/backdrop";
+import { useContext } from "react";
+import { AuthContext } from "../../Context/AuthContext";
+import NewPost from "../newPost/newpost";
 
 export const NavBar = () => {
+    const {cUser, mainLoder} = useContext(AuthContext);
     const [menuVisible, setMenuVisible] = useState(false);
     const [searching, setSearching] = useState(false);
+    const [newPost, setNewPost] = useState(false);
+
     const changeVisibility = () => {
         if (menuVisible) {
             setMenuVisible(false)
@@ -17,8 +23,13 @@ export const NavBar = () => {
         }
     }
 
+    const cancleNewPost = () => {
+        setNewPost(false);
+    }
+
     return (
         <div className={styles["header"]}>
+            { newPost && <BackDrop2 onClick={cancleNewPost} z={11}><NewPost onCancle={cancleNewPost}></NewPost></BackDrop2> }
             <div className={styles["brand-left"]}>
                 <img className={styles["brand-logo"]} src={logo} alt="" />
             </div>
@@ -49,12 +60,12 @@ export const NavBar = () => {
                             movie
                         </span>
                     </li>
-                    <li className={styles["navLink"]}>
-                        <Link to="/new-post">
+                    <li className={styles["navLink"]} onClick={()=> setNewPost(newPost=> !newPost)}>
+                        
                             <span className="material-symbols-rounded">
                                 add_box
                             </span>
-                        </Link>
+                        
                     </li>
                     <li className={styles["navLink"]}>
                         <span className="material-symbols-rounded">
@@ -62,10 +73,10 @@ export const NavBar = () => {
                         </span>
                     </li>
                     <li onClick={changeVisibility} className={`${styles["navLink"]} ${styles["menu-launch"]}`}>
-                        <span className="material-symbols-rounded">
+                        {mainLoder ? <span className="material-symbols-rounded">
                             account_circle
 
-                        </span>
+                        </span> : <img src={cUser.user.profileImgUrls[0]} className={styles.profileImg} />}
                         {menuVisible !== true ? "" :
                             <>
                                 <Backdrop1 onclick={changeVisibility} z={1}/>

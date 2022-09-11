@@ -1,42 +1,220 @@
-.uploadArea{
-    margin: auto;
-    width: 936px;
-    margin-top: 60px;
-    padding: 1rem;
+:root{
+    --header-height: 40px;
+    --new-post-container-width-lg : 60vw;
+    --new-post-preview-width-lg : calc(var(--new-post-container-width-lg)*2.8/4);
+    --new-post-content-width-lg : calc(var(--new-post-container-width-lg)*1.2/4);
 }
 
-#videoInput{
-    display: none;
-}
-.videoFrame{
-    margin: auto;
-    width: var(--videoCardWidth);
-    /* height: var(--videoCardHeight); */
-    background: #000;
-    /* position: relative; */
-    border-radius: 20px;
-    /* display: flex; */
-    /* flex-direction: column; */
+.container{
+    width: var(--new-post-container-width-lg);
+    height: calc(var(--new-post-preview-width-lg) + var(--header-height));
+    /* aspect-ratio: 1; */
+    width: fit-content;
+    overflow: hidden;
+    /* margin: auto; */
+    transition: all 100ms ease-in-out;
+    border-radius: 16px;
+    box-shadow: 1px 1px 5px 2px #0001;
+    box-sizing: border-box;
+    position: relative;
+    background: #fff;
+    top: 100px;
+}   
+.header{
+    height: var(--header-height);
+    border-bottom: 2px solid #ede;
+    display: flex;
+    padding: 0 16px;
+    justify-content: space-between;
+    align-items: center;
+    box-sizing: border-box;
     
 }
-.btn span{
-    width: var(--videoCardWidth);
+.header button {
+    cursor: pointer;
+    font-size: 1rem;
+    border: none;
+    background-color: transparent;
+    color: #0095f6;
+}
+.header button:disabled{
+    color: #ccc;
+}
+.header h1{
+    font-size: 1rem;
+    font-weight: 500;
+}
+
+
+
+
+.uploadArea{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    display: flex;
+    box-sizing: border-box;
+    transition: all .4s ease-in-out;
+}
+
+
+.frame{
+    width: var(--new-post-preview-width-lg);
+    height: var(--new-post-preview-width-lg);
+    /* padding: 1rem; */
+    aspect-ratio: 1;
+    justify-content: center;
+    align-items: center;
+    display: flex;
+    box-sizing: border-box;
+    
+}
+
+.btn{
+    width: calc(var(--shorts-player-width)/2);
     height: 40px;
     text-align: center;
     background: #f2f2f2;
     display: flex;
     justify-content: center;
     align-items: center;
-    border-radius: 10px 10px 0 0 ;
-    box-shadow: inset 0 0 10px 1px #0003;
+    border-radius: 12px;
+    /* box-shadow: inset 0 0 10px 1px #0003; */
     transition: all 150ms ease-in-out;
+    font-size: 1rem;
 }
-.videoFrame span:hover{
-    background: #ff0;
-    color: #00f;
+.btn span {
+    margin-right:5px ;
+    transition: all 150ms ;
 }
+.btn:hover{
+    background-color: #0095f6;
+    color: #fff;
+}
+
 .preview {
     background: #f2f2f2;
-    max-width: var(--videoCardWidth);
-    max-height: var(--videoCardHeight);
+    width: var(--new-post-preview-width-lg);
+    height: var(--new-post-preview-width-lg);
+    object-fit: fill;
+    /* max-height: var(--videoCardHeight); */
+    box-sizing: border-box;
+}
+#videoInput{
+    display: none;
+}
+
+.postInfoEdit{
+    width: var(-new-post-content-width-lg);
+    height: var(--new-post-preview-width-lg);
+    border-left: 2px solid #ede;
+    /* padding: 20px 0; */
+    box-sizing: border-box;
+    transition: all .4s ease-in-out;
+    animation: grow 400ms ;
+}
+.userCard{
+    width: var(--new-post-content-width-lg);
+    height: 50px;
+    display: flex;
+    align-items: center;
+    padding: 0 16px;
+    box-sizing: border-box;
+}
+.profileImg{
+    width: 30px;
+    height: 30px;
+    object-fit: cover;
+    margin-right: 10px;
+    border-radius: 50%;
+}
+.userName{
+    width: calc(var(--new-post-content-width-lg) + 82px );
+    text-overflow: ellipsis;
+    overflow: hidden;
+    display: block;
+    white-space: nowrap;
+    /* background: #000; */
+}
+#about{
+    margin: 0 16px 16px 16px; 
+    border-top: 2px dotted #ddd;
+    position: relative;
+}
+#about::after{
+    content: "About";
+    position: absolute;
+    top: -8px;;
+    font-size: .8rem;
+    background-color: #fff;
+    padding:0 5px 0 0;
+}
+.aboutPost{
+    width: var(--new-post-content-width-lg);
+    height: calc(var(--new-post-content-width-lg)*2/3);
+    resize: none;
+    border: none;
+    outline: none;
+    padding: 0 16px;
+    box-sizing: border-box;
+    border-bottom: 2px solid #ede;
+    font-size: 1rem;
+}
+
+.commentMode{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 6px 16px;
+}
+
+
+/* // checkbox */
+
+.checkboxLabel{
+    width: 44px;
+    height: 28px;
+
+}
+.checkboxLabel input {
+    width: 0;
+    height: 0;
+}
+
+.checkBox{
+    display: inline-block;
+    width: 44px;
+    height: 28px;
+    background: #aaa;
+    border-radius: 28px;
+    position: relative;
+    transition: all .4s ease;
+}
+
+.checkBox::after{
+    position: absolute;
+    content: "";
+    width: 22px;
+    height: 22px;
+    transition: all .4s ease;
+    border-radius: 22px;
+    background: #fff;
+    left: 3px;
+    bottom: 3px;
+}
+
+.checked{
+    background-color: #0095f6;
+}
+.checked::after{
+    transform: translate(16px);
+}
+
+@keyframes grow {
+    from{
+        width: 0;
+    }
+    to{
+        width: var(--new-post-content-width-lg)
+    }
 }

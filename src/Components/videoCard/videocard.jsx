@@ -31,12 +31,12 @@ export const VideoCard = (props) => {
     const userName = user ? user.userId : "loding..."
 
 
-    useEffect(() => {
-        onSnapshot(doc(db, "reels", props.id), (doc) => {
-            // console.log(doc.data());
-            setReelsData(doc.data())
-        });
-    }, [props.id])
+    // useEffect(() => {
+    //     onSnapshot(doc(db, "reels", props.id), (doc) => {
+    //         // console.log(doc.data());
+    //         setReelsData(doc.data())
+    //     });
+    // }, [props.id])
 
     useEffect(() => {
         (async () => {
@@ -92,7 +92,7 @@ export const VideoCard = (props) => {
             <div className="video-info">
                 <p className="post-info"><span className="material-symbols-rounded fill">
                     music_note
-                </span>{props.title}</p>
+                </span><marquee>{props.data.title}</marquee></p>
                 <div className="post-info">
                     <img className="post-profile" src={profileImgUrl} alt="" />
                     <p className="post-name">{userName}</p>
@@ -116,7 +116,7 @@ export const VideoCard = (props) => {
             <video
                 loop
                 autoPlay
-                className={"video"}
+                className={commentOn ? "video shrink" : "video"}
                 onClick={(e) => { console.log("video"); setCommentOn(false); return muteUnmute() }}
                 src={reelData.url}
                 ref={ref}

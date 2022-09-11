@@ -17,7 +17,7 @@ const Comment = (props) => {
         onSnapshot(q, (querySnapshot) => {
             const data = [];
             querySnapshot.forEach((doc) => {
-                data.push({id:doc.id, data:doc.data()});
+                data.push({ id: doc.id, data: doc.data() });
             });
             // console.log("All comments: ", data);
             setCommentArr(data)
@@ -25,7 +25,7 @@ const Comment = (props) => {
     }, [props.id])
     // console.log(props.commentArr);
     const postComment = async () => {
-        console.log(inputRef.current.innerText);
+        // console.log(inputRef.current.innerText);
         const msg = inputRef.current.innerText.trim();
 
         if (msg) {
@@ -46,9 +46,10 @@ const Comment = (props) => {
     const inputRef = useRef();
     return (
         <div className={styles.comments}>
-            <div className={styles["back-btn"]}><span onClick={props.onBack} className="material-symbols-rounded">
-                keyboard_backspace
-            </span>Comments</div>
+            <div className={styles["back-btn"]}>
+                <span onClick={props.onBack} className="material-symbols-rounded">
+                    keyboard_backspace
+                </span>Comments</div>
             <div className={styles["comment-box"]}>
                 {commentArr.map(comment => {
                     // console.log(comment);

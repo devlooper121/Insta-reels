@@ -8,23 +8,22 @@ import Loding from "../UI/loding";
 import { AuthContext } from "../../Context/AuthContext";
 
 
-import {getAllDataByCollection} from "../functions/util"
+// import {getAllDataByCollection} from "../functions/util"
 import ConfirmButton from "../Bacdrop/ConfirmButton";
 
 function Feed() {
     const [mute, setToMute] = useState(true);
-    const {mainLoder, onlineStatus} = useContext(AuthContext);
-    const [reelsData, setReelsData] = useState([]);
-    useEffect(() => {
-        (async()=>{
-            const data = await getAllDataByCollection("reels");
-            setReelsData(data)
-        })()
-    },[])
+    const {mainLoder, reelsData} = useContext(AuthContext);
+    // const [reelsData, setReelsData] = useState([]);
+    // useEffect(() => {
+    //     (async()=>{
+    //         const data = await getAllDataByCollection("reels");
+    //         setReelsData(data)
+    //     })()
+    // },[])
 
-    console.log(onlineStatus);
+    // console.log(onlineStatus);
     return (
-        onlineStatus ?"You are ofline": 
             <>
             
             <NavBar></NavBar>
@@ -33,7 +32,6 @@ function Feed() {
                 {reelsData && reelsData.map(reelsData => {
                     return <VideoCard
                         key={reelsData.id}
-                        title={"unknown"}
                         data={reelsData.data}
                         id={reelsData.id}
                         mute={mute}

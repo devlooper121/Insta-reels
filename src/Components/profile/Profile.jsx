@@ -7,11 +7,16 @@ import { AuthContext } from "../../Context/AuthContext"
 import { NavBar } from "../NavBar/NavBar";
 import PostItem from "./PostItem";
 import Loding from "../UI/loding";
+import {getMultipleDocsByCollectionAndField} from "../functions/util"
 
 function Profile() {
-    const { cUser, reelsData } = useContext(AuthContext);
+    const { cUser, reelsData} = useContext(AuthContext);
     const user = cUser.user;
     const[loding, setLoding] = useState(true);
+    // const [reelData, setReelData] = useState([]);
+    const reelData = reelsData.filter(reel=>{
+        return reel.data.uid === cUser.uid
+    })
     useEffect(()=>{
         if(user){
             setLoding(false);
@@ -19,10 +24,20 @@ function Profile() {
             setLoding(true)
         }
     },[user])
+    // useEffect(()=>{
+    //     (async()=>{
+    //         try{
+    //             const data = await getMultipleDocsByCollectionAndField("reels", "uid", cUser.uid);
+    //             setReelData(data);
+    //         }catch(err){
+    //             console.log(err.message);
+    //         }
+    //     })()
+    // },[])
     return (
         <>  
             <NavBar></NavBar>
-            {loding ? <Loding/> :<div className="profile-box">
+            {<div className="profile-box">
                 <div className="profile-container">
                     <div className="pimg-container">
                         <div className="img-box">
@@ -46,15 +61,15 @@ function Profile() {
                         </span>SAVED</li>
                     </ul>
                 </div>
-                {/* <div className="my-posts">
-                    {reelsData.filter((data) => data.value.uid === cUser.uid).map(data => {
+                <div className="my-posts">
+                    {reelData.map(reel => {
                         return (<PostItem
-                            key={data.key}
-                            id={data.key}
-                            url={data.value.url}
+                            key={reel.id}
+                            id={reel.key}
+                            url={reel.data.url}
                         />)
                     })}
-                </div> */}
+                </div>
             </div>}
         </>
     )

@@ -3,8 +3,10 @@ import { auth } from "../firebase";
 import { findUserByUID } from "../Components/functions/util";
 
 import { onAuthStateChanged } from "firebase/auth";
+import {getAllDataByCollection} from "../Components/functions/util"
 
 export const AuthContext = React.createContext();
+
 
 // jo bhi isme pass hoga / wrap hoga wo props.children me milega
 export function AuthContextProvider(props) {
@@ -12,6 +14,7 @@ export function AuthContextProvider(props) {
     const [error, setError] = useState(null);
     const [mainLoder, setMainLoder] = useState(true);
     const [onlineStatus, setOnlineStatus] = useState(null);
+    const [reelsData, setReelsData] = useState([]);
 
     useEffect(() => {
         window.addEventListener("offline", () => {
@@ -52,10 +55,16 @@ export function AuthContextProvider(props) {
 
         })
     }, [])
+    useEffect(() => {
+        (async()=>{
+            const data = await getAllDataByCollection("reels");
+            setReelsData(data)
+        })()
+    },[])
 
 
     return (
-        <AuthContext.Provider value={{ cUser, error, mainLoder, onlineStatus}}>
+        <AuthContext.Provider value={{ cUser, error, mainLoder, onlineStatus, reelsData}}>
             {mainLoder === false && props.children // show children only if mainloder is false
             }
         </AuthContext.Provider>

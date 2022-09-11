@@ -3,9 +3,15 @@ import styles from "./PostItem.module.css"
 
 
 const PostItem = (props) => {
-    return <div className={styles.item}>
-        <video src={props.url} className={styles.item} controls></video>
-    </div>
+    const mouseEnterHandler = (e) => {
+        e.target.play();
+    }
+    const mouseLeaveHandler = (e) => {
+        e.target.currentTime = 0;
+        e.target.pause();
+    }
+    return <video src={props.url} className={styles.item} onMouseEnter={mouseEnterHandler} onMouseLeave={mouseLeaveHandler}></video>
+    
 }
 
 export default PostItem

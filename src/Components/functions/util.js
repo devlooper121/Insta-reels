@@ -1,7 +1,8 @@
 import { auth, db, database } from "../../firebase"
 import { signOut } from "firebase/auth"
-import { doc, getDoc, setDoc, addDoc, collection, updateDoc, Timestamp, getDocs } from "firebase/firestore";
+import { doc, getDoc, setDoc, addDoc, collection, updateDoc, Timestamp, getDocs, where, query } from "firebase/firestore";
 import Compress from "compress.js";
+
 // realtime
 import { ref, push, set } from "firebase/database";
 // Auth functions
@@ -45,11 +46,11 @@ export const setData = async (collectionName, data) => {
 // update doc by collection and id
 
 export const updateDocByCollection = async (collectionName, id, data) => {
-    // console.log(collectionName, id, data);
+    console.log(collectionName, id, data);
     const docRef = doc(db, collectionName, id);
     try {
         await updateDoc(docRef, data);
-        // console.log("hua");
+        console.log("hua");
     } catch (err) {
         console.log(err);
         throw new Error(err)
@@ -77,6 +78,21 @@ export const getAllDataByCollection = async (collectionName) => {
     });
     return allDataArr;
 }
+
+// get multiple doc by some common field
+
+export const getMultipleDocsByCollectionAndField = async (collectionName, field, value) => {
+    const q = query(collection(db, collectionName), where(field, "==", value));
+    const querySnapshot = await getDocs(q);
+    const dataArr =[]
+    querySnapshot.forEach((doc) => {
+        // doc.data() is never undefined for query doc snapshots
+        // console.log(doc.id, " => ", doc.data());
+        dataArr.push({vid:doc.id, data:doc.data()})
+    });
+    return dataArr;
+}
+
 
 // export const writeRTD = (collectionName, data) => {
 //     const newDataKey = push(child(ref(database), collectionName)).key;

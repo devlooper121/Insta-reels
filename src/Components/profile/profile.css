@@ -8,7 +8,6 @@
 
 .profile-box{
     padding: 30px 20px;
-    margin-top: 60px;
     
 }
 
@@ -103,10 +102,12 @@ span.small{
     margin-right: 5px;
 }
 .my-posts{
-    width: 935px;
+    max-width: 935px;
     margin: auto;
     display: flex;
     flex-wrap: wrap;
+    height: 450px;
+    overflow-x: scroll;
 }
 
 
