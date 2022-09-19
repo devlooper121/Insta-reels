@@ -8,13 +8,16 @@ import { Backdrop1, BackDrop2 } from "../Bacdrop/backdrop";
 import { useContext } from "react";
 import { AuthContext } from "../../Context/AuthContext";
 import NewPost from "../newPost/newpost";
+import ProgressBar from "../UI/ProgressBar";
 
 export const NavBar = () => {
     const {cUser, mainLoder} = useContext(AuthContext);
     const [menuVisible, setMenuVisible] = useState(false);
     const [searching, setSearching] = useState(false);
     const [newPost, setNewPost] = useState(false);
-
+    const [uploadPercentage, setUploadPercentage] = useState(0);
+    window.addEventListener('online', () => console.log('Became online'));
+window.addEventListener('offline', () => console.log('Became offline'));
     const changeVisibility = () => {
         if (menuVisible) {
             setMenuVisible(false)
@@ -22,14 +25,25 @@ export const NavBar = () => {
             setMenuVisible(true)
         }
     }
-
+    const onPercentageChange = (value) => {
+        setUploadPercentage(value);
+    }
     const cancleNewPost = () => {
         setNewPost(false);
     }
 
     return (
+        
         <div className={styles["header"]}>
-            { newPost && <BackDrop2 onClick={cancleNewPost} z={11}><NewPost onCancle={cancleNewPost}></NewPost></BackDrop2> }
+            {uploadPercentage ? <ProgressBar value={uploadPercentage}/> : "" }
+            { newPost && <BackDrop2 
+                onClick={cancleNewPost} 
+                z={11}>
+                    <NewPost 
+                        onCancle={cancleNewPost}
+                        onPercentageChange = {onPercentageChange}
+                    />
+            </BackDrop2> }
             <div className={styles["brand-left"]}>
                 <img className={styles["brand-logo"]} src={logo} alt="" />
             </div>

@@ -4,6 +4,7 @@ import { findUserByUID } from "../Components/functions/util";
 
 import { onAuthStateChanged } from "firebase/auth";
 import {getAllDataByCollection} from "../Components/functions/util"
+import Loding from "../Components/UI/loding";
 
 export const AuthContext = React.createContext();
 
@@ -65,7 +66,7 @@ export function AuthContextProvider(props) {
 
     return (
         <AuthContext.Provider value={{ cUser, error, mainLoder, onlineStatus, reelsData}}>
-            {mainLoder === false && props.children // show children only if mainloder is false
+            {mainLoder === false ? props.children : <Loding/> // show children only if mainloder is false
             }
         </AuthContext.Provider>
     )

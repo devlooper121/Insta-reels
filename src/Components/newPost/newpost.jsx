@@ -1,4 +1,4 @@
-import React from "react"
+import React, { useRef } from "react"
 import { useState, useContext} from "react"
 import { NavBar } from "../NavBar/NavBar"
 import Button from "../UI/Button"
@@ -12,6 +12,7 @@ import {setData, updateDocByCollection } from "../functions/util"
 
 import useFileUpload from "../../Hooks/uploadFile-hook"
 import DropMessage from "../Bacdrop/dropMessage"
+import { useEffect } from "react"
 
 
 const NewPost = (props) => {
@@ -20,7 +21,8 @@ const NewPost = (props) => {
     const [videoUrl, setVideoUrl] = useState("");
     const [videoFile, setVideoFile] = useState(null);
     const [aboutVideo, setAboutVideo] = useState("");
-    
+    const videoRef = useRef();
+    const [play, setPlay] = useState(false);
     // for checkbox
     const [commentOn, setCommentOn] = useState(true);
     // const [videoFile, setVideoFile] = useState(null);
@@ -28,7 +30,6 @@ const NewPost = (props) => {
     // using custom hook for file upload
     const {
         uploadStatus:uploadPercentage,
-        setUploadStatus,
         uploadFileHandler,
 
     } = useFileUpload();
@@ -70,15 +71,18 @@ const NewPost = (props) => {
     }
 
     const cancleVideo = () => {
-        if(videoFile){
-            setVideoFile(null);
-            setVideoUrl("");
-            setCommentOn(true)
+        if(uploadPercentage === 0 || uploadPercentage === 100 ){
+            if(videoFile){
+                setVideoFile(null);
+                setVideoUrl("");
+                setCommentOn(true)
+            }
+            else{
+                console.log("novideo go back");
+                props.onCancle();
+            }
         }
-        else{
-            console.log("novideo go back");
-            props.onCancle();
-        }
+        
     }
 
     const uploadPost = () => {
@@ -89,37 +93,82 @@ const NewPost = (props) => {
     const textChangeHandler = (e) => {
         setAboutVideo(e.target.value)
     }
+    const playPauseHandler = () => {
+        if(play){
+            setPlay(play=>!play);
+            videoRef.current.pause();
+        }else{
+            setPlay(play=>!play);
+            videoRef.current.play();
+        }
+    }
+    useEffect(()=>{
+        props.onPercentageChange(uploadPercentage)
+    },[uploadPercentage])
     return (
         <React.Fragment>
-            {uploadPercentage ?  <ProgressBar value={uploadPercentage}/> : ""}
-            
             <div className={styles.container}>
                 <div className={styles.header}>
-                    <button name="back-btn" onClick={cancleVideo}><span className="material-symbols-rounded">
+                    <button name="back-btn" onClick={cancleVideo}>
+                        <span className="material-symbols-rounded">
                         keyboard_backspace
                     </span></button>
                     <h1>Create new post</h1>
-                    <button name="back-btn" disabled={videoFile ? false : true} onClick={uploadPost} >Post</button>
+                    <button 
+                        name="back-btn" 
+                        disabled={videoFile ? false : uploadPercentage === 0 ? true : false} 
+                        onClick={uploadPost} >Post</button>
                 </div>
                 <div className={styles.uploadArea}>
                     <div className={styles.frame}>
-                        {videoUrl ? <video src={videoUrl} className={styles.preview} ></video> :  <>
-                        <label htmlFor={styles.videoInput} className={styles.btn}><span className="material-symbols-rounded">
-                        file_upload
-                        </span> Select from device</label>
-                        <input id={styles.videoInput} type="file" accept="video/*" onChange={videoInputHandler} />
+                        {videoUrl ? <video  
+                            src={videoUrl} 
+                            className={styles.preview} 
+                            onClick={playPauseHandler}
+                            ref = {videoRef}
+                        /> :  <>
+                        <label 
+                            htmlFor={styles.videoInput} 
+                            className={styles.btn}
+                            >
+                            <span className="material-symbols-rounded">
+                                file_upload
+                            </span> 
+                            Select from device
+                        </label>
+                        <input 
+                            id={styles.videoInput} 
+                            type="file" 
+                            accept="video/*" 
+                            onChange={videoInputHandler} />
                         </>}
                     </div>
                     { videoFile ?  <div className={styles.postInfoEdit}>
                         <div className={styles.userCard}>
-                            <img src={user.profileImgUrls[0]} alt="profile-img" className={styles.profileImg}/>
-                            <p name="userName" className={styles.userName} > {user.userId} </p>
+                            <img 
+                                src={user.profileImgUrls[0]} 
+                                alt="profile-img" 
+                                className={styles.profileImg}
+                            />
+                            <p 
+                                name="userName" 
+                                className={styles.userName} 
+                            > {user.userId} </p>
                         </div>
-                        <p id={styles.about}></p>
-                        <textarea className={styles.aboutPost} value={aboutVideo} onChange={textChangeHandler} placeholder="Write a caption..." />
+                        {/* <p id={styles.about}></p> */}
+                        <textarea 
+                            className={styles.aboutPost} 
+                            value={aboutVideo} 
+                            onChange={textChangeHandler} 
+                            placeholder="Write a caption..." 
+                        />
                         <div className={styles.commentMode} >
-                            <p>Comment on</p>
-                            <Checkbox id="comment" value={commentOn} onClick={()=> setCommentOn(commentOn=> !commentOn)}></Checkbox>
+                            <p>Comment {commentOn ? 'on' : 'off'}</p>
+                            <Checkbox   
+                                id="comment" 
+                                value={commentOn} 
+                                onClick={()=> setCommentOn(commentOn=> !commentOn)}
+                            />
                         </div>
                     </div> : ""}
                 </div>

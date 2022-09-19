@@ -96,7 +96,7 @@
     background: #f2f2f2;
     width: var(--new-post-preview-width-lg);
     height: var(--new-post-preview-width-lg);
-    object-fit: fill;
+    object-fit: cover;
     /* max-height: var(--videoCardHeight); */
     box-sizing: border-box;
 }
