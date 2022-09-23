@@ -1,9 +1,10 @@
-import { useRef } from "react"
+import React, { useRef } from "react"
 import styles from "./comment.module.css"
 import CommentCard from "./commentCard"
 import { useContext, useState, useEffect } from "react"
 import { AuthContext } from "../../Context/AuthContext"
 import { updateDocByCollection, findUserByUID, setData } from "../functions/util"
+import CommentOff from "./CommentOff"
 //firebase
 import { db } from "../../firebase"
 import { collection, query, where, onSnapshot } from "firebase/firestore";
@@ -13,7 +14,7 @@ const Comment = (props) => {
     const user = cUser.user;
     const [commentArr, setCommentArr] = useState([]);
     useEffect(() => {
-        const q = query(collection(db, "comments"), where("vid", "==", props.id));
+        if(props.permision){const q = query(collection(db, "comments"), where("vid", "==", props.id));
         onSnapshot(q, (querySnapshot) => {
             const data = [];
             querySnapshot.forEach((doc) => {
@@ -21,7 +22,7 @@ const Comment = (props) => {
             });
             // console.log("All comments: ", data);
             setCommentArr(data)
-        });
+        });}
     }, [props.id])
     // console.log(props.commentArr);
     const postComment = async () => {
@@ -50,7 +51,7 @@ const Comment = (props) => {
                 <span onClick={props.onBack} className="material-symbols-rounded">
                     keyboard_backspace
                 </span>Comments</div>
-            <div className={styles["comment-box"]}>
+            {props.permision ?<React.Fragment> <div className={styles["comment-box"]}>
                 {commentArr.map(comment => {
                     // console.log(comment);
                     return (
@@ -67,7 +68,7 @@ const Comment = (props) => {
                 <span onClick={postComment} className={`material-symbols-rounded ${styles.button}`}>
                     send
                 </span>
-            </div>
+            </div> </React.Fragment>: <CommentOff/>}
         </div>
     )
 }
