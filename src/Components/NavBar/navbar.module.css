@@ -2,7 +2,7 @@
 
 .header{
     height: 60px;
-    max-width: 935px;
+    width: 935px;
     display: flex;
     align-items: center;
     margin: auto;

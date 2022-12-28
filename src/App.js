@@ -1,5 +1,4 @@
 // npm install react-router-dom@5.3.1
-import "./App.css"
 import Profile from "./Components/profile/Profile";
 import Feed from "./Components/feed/Feed";
 import NewPost from "./Components/newPost/newpost";
